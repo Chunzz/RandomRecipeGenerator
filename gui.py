@@ -1,5 +1,5 @@
 from tkinter import *
-from generateRecipes import generateRecipes
+from generateRecipes import *
 import random
 from tkinter import messagebox
 
@@ -49,7 +49,12 @@ class Gui:
     def showRecipeFrame(self):
         self.recipeFrame = LabelFrame(self.root, text="Here are your suggested recipes\n")
         recipeLabelList = []
-        recipeList = generateRecipes()
+
+        if self.userId == 0:
+            recipeList = generateAriefRecipes()
+        else:
+            recipeList = generateSamRecipes()
+
         randomRecipeList = random.sample(recipeList, self.numberOfRecipe)
 
         for recipe in randomRecipeList:
@@ -61,7 +66,7 @@ class Gui:
         backButton = Button(self.recipeFrame, text="Back", command=self.backButton, highlightbackground='#3E4149')
         backButton.pack()
 
-        regenerateButton = Button(self.recipeFrame, text="Regenerate", command=self.regenerateButton, highlightbackground='#3E4149')
+        regenerateButton = Button(self.recipeFrame, text="Reroll", command=self.regenerateButton, highlightbackground='#3E4149')
         regenerateButton.pack()
 
         self.recipeFrame.pack()
