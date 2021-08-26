@@ -8,17 +8,40 @@ class Gui:
     promptFrame = LabelFrame(root, text="Hello, how many meals would you like to cook this week? (1-5)")
     promptEntry = Entry(promptFrame)
     recipeFrame = LabelFrame(root, text="Here are your suggested recipes")
+    userSelectionFrame = LabelFrame(root, text="Hello, please select a user")
     numberOfRecipe = 0
+    userId = 0
 
     def startGui(self):
-        self.showPromptFrame()
+        self.showUserSelectionFrame()
         self.root.geometry("500x300")
         self.root.mainloop()
 
+    def showUserSelectionFrame(self):
+        self.userSelectionFrame = LabelFrame(self.root, text="Hello, please select a user")
+        samButton = Button(self.userSelectionFrame, text="Sam", command=self.samButton, highlightbackground='#3E4149')
+        samButton.pack()
+        ariefButton = Button(self.userSelectionFrame, text="Arief", command=self.ariefButton, highlightbackground='#3E4149')
+        ariefButton.pack()
+        self.userSelectionFrame.pack()
+
+
+
     def showPromptFrame(self):
-        self.promptFrame = LabelFrame(self.root, text="Hello, how many meals would you like to cook this week? (1-5)")
+        if self.userId == 0:
+            promptText = "Hi Arief, how many meals would you like to cook this week? (1-5)"
+        else:
+            promptText = "Hi Sam, how many meals would you like to cook this week? (1-5)"
+
+
+        self.promptFrame = LabelFrame(self.root, text=promptText)
         self.promptEntry = Entry(self.promptFrame)
         self.promptEntry.pack()
+
+
+        backButtonOne = Button(self.promptFrame, text="Back", command=self.backButtonOne, highlightbackground='#3E4149')
+        backButtonOne.pack()
+
         nextButton = Button(self.promptFrame, text="Next", command=self.nextButton, highlightbackground='#3E4149')
         nextButton.pack()
         self.promptFrame.pack()
@@ -46,6 +69,20 @@ class Gui:
     def regenerateButton(self):
         self.recipeFrame.destroy()
         self.showRecipeFrame()
+
+    def samButton(self):
+        self.userId = 1
+        self.userSelectionFrame.destroy()
+        self.showPromptFrame()
+
+    def ariefButton(self):
+        self.userId = 0
+        self.userSelectionFrame.destroy()
+        self.showPromptFrame()
+
+    def backButtonOne(self):
+        self.promptFrame.destroy()
+        self.showUserSelectionFrame()
 
     def backButton(self):
         self.recipeFrame.destroy()
